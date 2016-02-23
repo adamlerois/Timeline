@@ -20,6 +20,8 @@
 		547F4E771C7D147500AF1800 /* AddPhotoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547F4E761C7D147500AF1800 /* AddPhotoTableViewController.swift */; };
 		547F4E791C7D159800AF1800 /* LoginSignupChoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547F4E781C7D159800AF1800 /* LoginSignupChoiceViewController.swift */; };
 		547F4E7B1C7D163500AF1800 /* LoginSignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547F4E7A1C7D163500AF1800 /* LoginSignupViewController.swift */; };
+		547F4E7D1C7D187200AF1800 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547F4E7C1C7D187200AF1800 /* User.swift */; };
+		547F4E7F1C7D1B9700AF1800 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547F4E7E1C7D1B9700AF1800 /* Comment.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,8 @@
 		547F4E761C7D147500AF1800 /* AddPhotoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPhotoTableViewController.swift; sourceTree = "<group>"; };
 		547F4E781C7D159800AF1800 /* LoginSignupChoiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginSignupChoiceViewController.swift; sourceTree = "<group>"; };
 		547F4E7A1C7D163500AF1800 /* LoginSignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginSignupViewController.swift; sourceTree = "<group>"; };
+		547F4E7C1C7D187200AF1800 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		547F4E7E1C7D1B9700AF1800 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +118,8 @@
 				547F4E721C7D0C9400AF1800 /* UserSearchTableViewController.swift */,
 				547F4E701C7CFFB800AF1800 /* PostDetailTableViewController.swift */,
 				01E3FC281BE92C7600187536 /* Main.storyboard */,
+				547F4E7C1C7D187200AF1800 /* User.swift */,
+				547F4E7E1C7D1B9700AF1800 /* Comment.swift */,
 				547F4E7A1C7D163500AF1800 /* LoginSignupViewController.swift */,
 				547F4E781C7D159800AF1800 /* LoginSignupChoiceViewController.swift */,
 				547F4E761C7D147500AF1800 /* AddPhotoTableViewController.swift */,
@@ -279,8 +285,10 @@
 				547F4E771C7D147500AF1800 /* AddPhotoTableViewController.swift in Sources */,
 				547F4E751C7D131600AF1800 /* ProfileDetailViewController.swift in Sources */,
 				547F4E6F1C7CFF6300AF1800 /* TimelineTableViewController.swift in Sources */,
+				547F4E7F1C7D1B9700AF1800 /* Comment.swift in Sources */,
 				01E3FC251BE92C7600187536 /* AppDelegate.swift in Sources */,
 				547F4E731C7D0C9400AF1800 /* UserSearchTableViewController.swift in Sources */,
+				547F4E7D1C7D187200AF1800 /* User.swift in Sources */,
 				547F4E711C7CFFB800AF1800 /* PostDetailTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
