@@ -7,13 +7,12 @@
 //
 
 import Foundation
+import UIKit
 class ImageController{
     static func uploadImage(image: UIImage, completion:(identifier: String) -> Void) {
         
     }
-    
-    
-    
+
     
     static func imageForIdentifier( identifier: String, completion:(image: UIImage?) -> Void) {
         
