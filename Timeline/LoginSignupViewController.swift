@@ -10,6 +10,7 @@ import UIKit
 
 class LoginSignupViewController: UIViewController {
     
+    
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -17,29 +18,27 @@ class LoginSignupViewController: UIViewController {
     @IBOutlet weak var urlTextField: UITextField!
     @IBOutlet weak var actionButton: UIButton!
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
     // computed property
     var fieldsAreValid: Bool {
         get {
             switch mode {
             case .Login:
-               return  !(emailTextField.text!.isEmpty  || passwordTextField.text!.isEmpty)
+                return  !(emailTextField.text!.isEmpty  || passwordTextField.text!.isEmpty)
             case .Signup:
                 return !(emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty || userNameTextField.text!.isEmpty)
                 
                 
-                }
-        
-                }
+            }
             
-                }
-                
-                
-                
-    @IBAction func actionButtonTapped(sender: AnyObject) {
+        }
         
     }
     
-        
+    
     
     
     
@@ -49,52 +48,112 @@ class LoginSignupViewController: UIViewController {
         case Login
         case Signup
     }
-    var mode: ViewMode = .Signup
-
+    var mode = ViewMode.Signup
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViewBasedOnMode()
     }
-        func updateViewBasedOnMode() {
-            switch mode {
-            case .Signup:
-                self.userNameTextField.hidden = false
-                self.passwordTextField.hidden = false
-                self.bioTextField.hidden = false
-                self.urlTextField.hidden = false
-                self.emailTextField.hidden = false
-                actionButton.setTitle("SignUp", forState: .Normal)
-            case .Login :
-                self.emailTextField.hidden = false
-                self.passwordTextField.hidden = false
-                self.userNameTextField.hidden = true
-                self.bioTextField.hidden = true
-                self.urlTextField.hidden = true
-                actionButton.setTitle("LogIn", forState: .Normal)
-            }
-            
+    func updateViewBasedOnMode() {
+        switch mode {
+        case .Signup:
+            self.userNameTextField.hidden = false
+            self.passwordTextField.hidden = false
+            self.bioTextField.hidden = false
+            self.urlTextField.hidden = false
+            self.emailTextField.hidden = false
+            actionButton.setTitle("SignUp", forState: .Normal)
+        case .Login :
+            self.emailTextField.hidden = false
+            self.passwordTextField.hidden = false
+            self.userNameTextField.hidden = true
+            self.bioTextField.hidden = true
+            self.urlTextField.hidden = true
+            actionButton.setTitle("LogIn", forState: .Normal)
         }
-
         
-    
-
-    @IBAction func actionButton(sender: AnyObject) {
-    }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
+    
+    @IBAction func actionButtonTapped(sender: AnyObject) {
+        if fieldsAreValid {
+            switch mode {
+            case .Login:
+                UserController.authenticateUser(emailTextField.text!, password: passwordTextField.text!, completion: { (success, user) -> Void in
+                if  success, let _ = user {
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }else {
+                    self.validationAlert("LogIn Error", message: "invalid email or password please try again")
+                }
+                })
+            case .Signup:
+                UserController.createUser(emailTextField.text!, password: passwordTextField.text!, bio: bioTextField.text!, url: urlTextField.text!, completion: { (success, user) -> Void in
+                    if success, let _ = user {
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                        
+                    }else {
+                        self.validationAlert("SignUp Error", message: "invalid information. please check again")
+                    }
+                })
 
-    /*
-    // MARK: - Navigation
+                /*
+                // MARK: - Navigation
+                
+                // In a storyboard-based application, you will often want to do a little preparation before navigation
+                override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+                // Get the new view controller using segue.destinationViewController.
+                // Pass the selected object to the new view controller.
+                }
+                */
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+                
+                
+                // make an alert function to use throughout the entire code
+            }
+        }
     }
-    */
+    
+            func validationAlert(title: String, message: String) {
+                let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+                // add action to alert
+                let okay = UIAlertAction(title: "ok", style: .Default, handler: nil)
 
+                alert.addAction(okay)
+                }
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
 }
+

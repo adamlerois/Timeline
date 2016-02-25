@@ -196,14 +196,14 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="280" height="104"/>
                                                 <state key="normal" title="Login"/>
                                                 <connections>
-                                                    <segue destination="Rsy-Ss-pE8" kind="show" id="TPf-mS-0BN"/>
+                                                    <segue destination="Rsy-Ss-pE8" kind="show" identifier="logIn" id="TPf-mS-0BN"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0AV-UJ-DXx">
                                                 <rect key="frame" x="280" y="0.0" width="280" height="104"/>
                                                 <state key="normal" title="SignUp"/>
                                                 <connections>
-                                                    <segue destination="Rsy-Ss-pE8" kind="show" id="qoi-TM-Od1"/>
+                                                    <segue destination="Rsy-Ss-pE8" kind="show" identifier="signUp" id="qoi-TM-Od1"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -328,7 +328,7 @@
                         <segue destination="2CD-iX-pCm" kind="relationship" relationship="viewControllers" id="7PU-tv-eth"/>
                         <segue destination="0yC-bu-yVu" kind="relationship" relationship="viewControllers" id="DP0-OR-0BE"/>
                         <segue destination="mMj-mz-bIL" kind="relationship" relationship="viewControllers" id="BRg-g3-3jV"/>
-                        <segue destination="Vfe-mb-Hnf" kind="presentation" id="lZk-41-xNk"/>
+                        <segue destination="Vfe-mb-Hnf" kind="presentation" identifier="noCurrentUser" id="lZk-41-xNk"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4cE-px-mhw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -412,8 +412,8 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="lZk-41-xNk"/>
+        <segue reference="TPf-mS-0BN"/>
         <segue reference="lNr-eo-HS9"/>
         <segue reference="nhD-6G-nTG"/>
-        <segue reference="qoi-TM-Od1"/>
     </inferredMetricsTieBreakers>
 </document>
