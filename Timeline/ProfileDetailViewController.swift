@@ -13,6 +13,7 @@ class ProfileDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(user)
 
         // Do any additional setup after loading the view.
     }

@@ -19,8 +19,8 @@ class UserSearchTableViewController: UITableViewController, UISearchResultsUpdat
         func users(completion: (users: [User]?) -> Void) {
             switch self {
             case .Friends:
-                UserController.followedByUser(UserController.sharedController.currentUser){ (followers) -> Void in
-                    completion(users: followers)
+                UserController.followedByUser(UserController.sharedController.currentUser) { (followers) -> Void in
+                completion(users: followers)
                 }
                 
                 
@@ -83,11 +83,11 @@ class UserSearchTableViewController: UITableViewController, UISearchResultsUpdat
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         let searchTerm = searchController.searchBar.text ?? "".lowercaseString
-        if let resultsViewController = searchController.searchResultsController as? UserSearchResultsTableViewController {
+        let resultsViewController = searchController.searchResultsController as! UserSearchResultsTableViewController
             resultsViewController.userResultsDataSource = usersDataSource.filter({$0.userName.lowercaseString.containsString(searchTerm)})
             resultsViewController.tableView.reloadData()
         }
-    }
+    
 
     
     
@@ -120,7 +120,24 @@ class UserSearchTableViewController: UITableViewController, UISearchResultsUpdat
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        
+        if segue.identifier == "toProfile" {
+            if let cell = sender as? UITableViewCell {
+            let destinationController = segue.destinationViewController as! ProfileDetailViewController
+                if  let indexPath = tableView.indexPathForCell(cell) {
+                let user = usersDataSource[indexPath.row]
+                    destinationController.user = user
+                
+                }else if let indexPath = (searchController.searchResultsController as? UserSearchResultsTableViewController)?.tableView.indexPathForCell(cell) {
+                    
+                    let user = (searchController.searchResultsController as! UserSearchResultsTableViewController).userResultsDataSource[indexPath.row]
+                    
+                    let destinationViewController = segue.destinationViewController as? ProfileDetailViewController
+                    destinationViewController?.user = user
+ 
+                    
+                    
+                }
+        }
         
         
         
@@ -134,4 +151,5 @@ class UserSearchTableViewController: UITableViewController, UISearchResultsUpdat
     }
     
 
+}
 }
