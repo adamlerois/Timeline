@@ -10,44 +10,87 @@ import UIKit
 
 class UserSearchTableViewController: UITableViewController {
     var usersDataSource: [User] = []
-
+    
+    enum ViewMode: Int {
+        case Friends = 0
+        case All = 1
+        func users(completion: (users: [User]?) -> Void) {
+            switch self {
+            case .Friends:
+                UserController.followedByUser(UserController.sharedController.currentUser){ (followers) -> Void in
+                    completion(users: followers)
+                }
+                
+                
+            case .All:
+                UserController.fetchAllUsers() { (users) -> Void in
+                    completion(users: users)
+                }
+                
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    // properties//////////\\\\\\\\\
     @IBOutlet weak var modeSegmentedControl: UISegmentedControl!
+    var mode: ViewMode {
+        return ViewMode(rawValue: modeSegmentedControl.selectedSegmentIndex)!
+        
+    }
+    // functions/////////\\\\\\\\\\\
+    
+    
+    @IBAction func selectedIndexChanged(sender: AnyObject) {
+    }
+    
+    
+    func updateViewBasedOnMode() {
+        mode.users { (users) -> Void in
+            if let users = users {
+            self.usersDataSource = users
+            
+            } else {
+            self.usersDataSource = []
+            }
+            self.tableView.reloadData()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        updateViewBasedOnMode()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 0
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return usersDataSource.count
     }
 
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCellWithIdentifier("fromCell", forIndexPath: indexPath)
+        let users = usersDataSource[indexPath.row]
+        cell.textLabel?.text = users.userName
         return cell
+        
+
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.

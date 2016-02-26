@@ -17,7 +17,7 @@ class UserController {
     }
     
     
-    static func fetchAllUsers(completion:(user: [User]) -> Void) {
+    static func fetchAllUsers(completion:(users: [User]) -> Void) {
         
     }
     
@@ -35,7 +35,7 @@ class UserController {
         
     }
     
-    static func followedByUser(user: User, completion:(users: [User?]) -> Void) {
+    static func followedByUser(user: User, completion:(followed: [User]?) -> Void) {
         
     }
     
