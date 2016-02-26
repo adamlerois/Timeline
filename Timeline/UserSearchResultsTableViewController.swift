@@ -8,14 +8,12 @@
 
 import UIKit
 
-class UserSearchResultsTableViewController: UITableViewController, UISearchResultsUpdating {
+class UserSearchResultsTableViewController: UITableViewController {
     var userResultsDataSource: [User] = []
-    var searchController: UISearchController!
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpSearchController()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -25,27 +23,8 @@ class UserSearchResultsTableViewController: UITableViewController, UISearchResul
     }
 
     
-    ////////\\\\\\\\  functions    //////////\\\\\\\\\
     
-    func setUpSearchController() {
-      let resultsController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("searchResultScene")
-        searchController = UISearchController(searchResultsController: resultsController)
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.placeholder = "Search Users..."
-        searchController.hidesNavigationBarDuringPresentation = true
-        tableView.tableHeaderView = searchController.searchBar
-        
-        
-    }
-    
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        let searchTerm = searchController.searchBar.text ?? "".lowercaseString
-        if let resultsViewController = searchController.searchResultsController as? UserSearchResultsTableViewController {
-        resultsViewController.userResultsDataSource = userResultsDataSource.filter({$0.userName.lowercaseString.containsString(searchTerm)})
-        resultsViewController.tableView.reloadData()
-    }
-    }
-    
+       
     
     
     

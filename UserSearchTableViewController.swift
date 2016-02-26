@@ -8,8 +8,10 @@
 
 import UIKit
 
-class UserSearchTableViewController: UITableViewController {
+class UserSearchTableViewController: UITableViewController, UISearchResultsUpdating {
     var usersDataSource: [User] = []
+    var searchController: UISearchController!
+
     
     enum ViewMode: Int {
         case Friends = 0
@@ -65,6 +67,30 @@ class UserSearchTableViewController: UITableViewController {
         updateViewBasedOnMode()
     }
     
+    
+    ///////
+    
+    func setUpSearchController() {
+        let resultsController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("searchResultScene")
+        searchController = UISearchController(searchResultsController: resultsController)
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.placeholder = "Search Users..."
+        searchController.hidesNavigationBarDuringPresentation = true
+        tableView.tableHeaderView = searchController.searchBar
+        
+        
+    }
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        let searchTerm = searchController.searchBar.text ?? "".lowercaseString
+        if let resultsViewController = searchController.searchResultsController as? UserSearchResultsTableViewController {
+            resultsViewController.userResultsDataSource = usersDataSource.filter({$0.userName.lowercaseString.containsString(searchTerm)})
+            resultsViewController.tableView.reloadData()
+        }
+    }
+
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -87,54 +113,25 @@ class UserSearchTableViewController: UITableViewController {
         let user = usersDataSource[indexPath.row]
         cell.textLabel?.text = user.userName
         return cell
-        
-
     }
     
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     }
-    */
+    
 
 }

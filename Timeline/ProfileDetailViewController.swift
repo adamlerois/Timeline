@@ -9,7 +9,7 @@
 import UIKit
 
 class ProfileDetailViewController: UIViewController {
-    
+    var user: User?
 
     override func viewDidLoad() {
         super.viewDidLoad()
