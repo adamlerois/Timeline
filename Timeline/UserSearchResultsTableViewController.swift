@@ -1,94 +1,80 @@
 //
-//  UserSearchTableViewController.swift
+//  UserSearchResultsTableViewController.swift
 //  Timeline
 //
-//  Created by youcef bouhafna on 2/23/16.
+//  Created by youcef bouhafna on 2/25/16.
 //  Copyright © 2016 DevMountain. All rights reserved.
 //
 
 import UIKit
 
-class UserSearchTableViewController: UITableViewController {
-    var usersDataSource: [User] = []
-    
-    enum ViewMode: Int {
-        case Friends = 0
-        case All = 1
-        func users(completion: (users: [User]?) -> Void) {
-            switch self {
-            case .Friends:
-                UserController.followedByUser(UserController.sharedController.currentUser){ (followers) -> Void in
-                    completion(users: followers)
-                }
-                
-                
-            case .All:
-                UserController.fetchAllUsers() { (users) -> Void in
-                    completion(users: users)
-                }
-                
-            }
-        }
-    }
-    
-    
-    
-    
-    
-    // properties//////////\\\\\\\\\
-    @IBOutlet weak var modeSegmentedControl: UISegmentedControl!
-    var mode: ViewMode {
-        return ViewMode(rawValue: modeSegmentedControl.selectedSegmentIndex)!
-        
-    }
-    // functions/////////\\\\\\\\\\\
-    
-    
-    @IBAction func selectedIndexChanged(sender: AnyObject) {
-    }
-    
-    
-    func updateViewBasedOnMode() {
-        mode.users { (users) -> Void in
-            if let users = users {
-            self.usersDataSource = users
-            
-            } else {
-            self.usersDataSource = []
-            }
-            self.tableView.reloadData()
-        }
-    }
-    
+class UserSearchResultsTableViewController: UITableViewController, UISearchResultsUpdating {
+    var userResultsDataSource: [User] = []
+    var searchController: UISearchController!
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateViewBasedOnMode()
+        setUpSearchController()
+
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
+
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
+
+    
+    ////////\\\\\\\\  functions    //////////\\\\\\\\\
+    
+    func setUpSearchController() {
+      let resultsController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("searchResultScene")
+        searchController = UISearchController(searchResultsController: resultsController)
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.placeholder = "Search Users..."
+        searchController.hidesNavigationBarDuringPresentation = true
+        tableView.tableHeaderView = searchController.searchBar
+        
+        
+    }
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        let searchTerm = searchController.searchBar.text ?? "".lowercaseString
+        if let resultsViewController = searchController.searchResultsController as? UserSearchResultsTableViewController {
+        resultsViewController.userResultsDataSource = userResultsDataSource.filter({$0.userName.lowercaseString.containsString(searchTerm)})
+        resultsViewController.tableView.reloadData()
+    }
+    }
+    
+    
+    
+    
+    
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     // MARK: - Table view data source
-    
+
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 0
     }
-    
+
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return usersDataSource.count
+        // #warning Incomplete implementation, return the number of rows
+        return userResultsDataSource.count
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("fromCell", forIndexPath: indexPath)
-        let user = usersDataSource[indexPath.row]
+        let cell = tableView.dequeueReusableCellWithIdentifier("searchResultCell", forIndexPath: indexPath)
+        let user  = userResultsDataSource[indexPath.row]
         cell.textLabel?.text = user.userName
         return cell
-        
-
     }
     
 
