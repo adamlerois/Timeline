@@ -23,7 +23,7 @@ class PostController {
         
     }
     
-    static func postsForUser(user: User, completion:(post: [Post]?) -> Void) {
+    static func postsForUser(user: User, completion:(posts: [Post]?) -> Void) {
         
     }
     

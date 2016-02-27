@@ -9,7 +9,29 @@
 import UIKit
 
 class ProfileDetailViewController: UIViewController {
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     var user: User?
+    var userPosts: [Post] = []
+    func updateBasedOnUser() {
+        guard let user = user else {
+            return
+        }
+        title = user.userName
+        PostController.postsForUser(user) { ( posts) -> Void in
+            if let posts = posts {
+                self.userPosts = posts
+            
+            }else {
+                self.userPosts = []
+            }
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                // now you have to add collectionview  @IBoutlet  otherwise its gonna throw an erro /////////\\\\\\\\
+             self.collectionView.reloadData() 
+            })
+        }
+    }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
