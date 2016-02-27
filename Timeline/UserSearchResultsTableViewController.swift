@@ -35,8 +35,15 @@ class UserSearchResultsTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // MARK: - Table view delegate
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let user = tableView.cellForRowAtIndexPath(indexPath)
+        self.presentingViewController?.performSegueWithIdentifier("toProfile", sender: user)
+    }
 
     // MARK: - Table view data source
+    
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -55,6 +62,7 @@ class UserSearchResultsTableViewController: UITableViewController {
         cell.textLabel?.text = user.userName
         return cell
     }
+    
     
 
     /*
@@ -102,4 +110,5 @@ class UserSearchResultsTableViewController: UITableViewController {
     }
     */
 
+    
 }

@@ -11,7 +11,7 @@ import UIKit
 class UserSearchTableViewController: UITableViewController, UISearchResultsUpdating {
     var usersDataSource: [User] = []
     var searchController: UISearchController!
-
+    
     
     enum ViewMode: Int {
         case Friends = 0
@@ -20,7 +20,7 @@ class UserSearchTableViewController: UITableViewController, UISearchResultsUpdat
             switch self {
             case .Friends:
                 UserController.followedByUser(UserController.sharedController.currentUser) { (followers) -> Void in
-                completion(users: followers)
+                    completion(users: followers)
                 }
                 
                 
@@ -53,10 +53,10 @@ class UserSearchTableViewController: UITableViewController, UISearchResultsUpdat
     func updateViewBasedOnMode() {
         mode.users { (users) -> Void in
             if let users = users {
-            self.usersDataSource = users
-            
+                self.usersDataSource = users
+                
             } else {
-            self.usersDataSource = []
+                self.usersDataSource = []
             }
             self.tableView.reloadData()
         }
@@ -84,11 +84,11 @@ class UserSearchTableViewController: UITableViewController, UISearchResultsUpdat
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         let searchTerm = searchController.searchBar.text ?? "".lowercaseString
         let resultsViewController = searchController.searchResultsController as! UserSearchResultsTableViewController
-            resultsViewController.userResultsDataSource = usersDataSource.filter({$0.userName.lowercaseString.containsString(searchTerm)})
-            resultsViewController.tableView.reloadData()
-        }
+        resultsViewController.userResultsDataSource = usersDataSource.filter({$0.userName.lowercaseString.containsString(searchTerm)})
+        resultsViewController.tableView.reloadData()
+    }
     
-
+    
     
     
     override func didReceiveMemoryWarning() {
@@ -106,7 +106,7 @@ class UserSearchTableViewController: UITableViewController, UISearchResultsUpdat
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return usersDataSource.count
     }
-
+    
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("fromCell", forIndexPath: indexPath)
@@ -116,40 +116,40 @@ class UserSearchTableViewController: UITableViewController, UISearchResultsUpdat
     }
     
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if segue.identifier == "toProfile" {
             if let cell = sender as? UITableViewCell {
-            let destinationController = segue.destinationViewController as! ProfileDetailViewController
-                if  let indexPath = tableView.indexPathForCell(cell) {
-                let user = usersDataSource[indexPath.row]
+                let destinationController = segue.destinationViewController as! ProfileDetailViewController
+                if  let indexPath = self.tableView.indexPathForCell(cell) {
+                    let user = usersDataSource[indexPath.row]
                     destinationController.user = user
-                
+                    
                 }else if let indexPath = (searchController.searchResultsController as? UserSearchResultsTableViewController)?.tableView.indexPathForCell(cell) {
                     
-                    let user = (searchController.searchResultsController as! UserSearchResultsTableViewController).userResultsDataSource[indexPath.row]
+                    let user = (searchController.searchResultsController as? UserSearchResultsTableViewController)!.userResultsDataSource[indexPath.row]
                     
                     let destinationViewController = segue.destinationViewController as? ProfileDetailViewController
                     destinationViewController?.user = user
- 
+                    
                     
                     
                 }
+            }
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
         }
         
         
-        
-        
-        
-        
-        
-        
-        
-        
     }
-    
-
-}
 }
