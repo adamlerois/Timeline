@@ -162,10 +162,11 @@
                                         </constraints>
                                         <connections>
                                             <outlet property="imageView" destination="18y-yG-F0C" id="ylQ-mg-6lk"/>
+                                            <segue destination="RlO-jI-Hpn" kind="show" identifier="toPostDetailView" id="cbp-cO-5y7"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="reusableViewIdentifier" id="xOt-4d-WY1" customClass="ProfileHeaderCollectionReusableView" customModule="Timeline" customModuleProvider="target">
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HeaderViewIdentifier" id="xOt-4d-WY1" customClass="ProfileHeaderCollectionReusableView" customModule="Timeline" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="64" width="600" height="150"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
@@ -216,7 +217,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="vb8-8a-qEd"/>
+                    <navigationItem key="navigationItem" id="vb8-8a-qEd">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="edit" id="f1p-Sw-0gW">
+                            <connections>
+                                <segue destination="Rsy-Ss-pE8" kind="show" identifier="toEditProfile" id="9vm-Ow-cmA"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="editBarButton" destination="f1p-Sw-0gW" id="nUC-Ex-g24"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j3H-Jm-aep" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -528,9 +538,10 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="lZk-41-xNk"/>
         <segue reference="RUa-WY-YFU"/>
+        <segue reference="9vm-Ow-cmA"/>
+        <segue reference="cbp-cO-5y7"/>
         <segue reference="nhD-6G-nTG"/>
-        <segue reference="ehT-fv-aMc"/>
-        <segue reference="TPf-mS-0BN"/>
     </inferredMetricsTieBreakers>
 </document>

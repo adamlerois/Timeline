@@ -15,12 +15,15 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
     @IBOutlet weak var followUserButton: UIButton!
     var delegate: ProfileHeaderCollectionReusableViewDelegate?
     @IBAction func urlButtonTapped(sender: AnyObject){
-       
+        
         // calling the protocol function that we created on the bottom
         delegate?.userTappedURLButton()
     }
     
     @IBAction func followActionButtonTapped(sender: AnyObject) {
+        
+        // calling the protocol function that we created on the botton also 
+        delegate?.userTappedFollowActionButton()
         
     }
     func updateWithUser(user: User) {
@@ -35,7 +38,10 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
         } else {
             urlButton.hidden = true
         }
-        
+        if user == UserController.sharedController.currentUser {
+            followUserButton.setTitle("Logout", forState: .Normal)
+
+        }
         if user == UserController.sharedController.currentUser {
             followUserButton.hidden = true
         } else {
@@ -52,10 +58,10 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
     }
     
 }
-    protocol ProfileHeaderCollectionReusableViewDelegate {
+protocol ProfileHeaderCollectionReusableViewDelegate {
     
     func userTappedFollowActionButton()
-        func userTappedURLButton()
+    func userTappedURLButton()
     
 }
 

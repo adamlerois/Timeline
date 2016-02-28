@@ -9,7 +9,7 @@
 import UIKit
 
 class LoginSignupViewController: UIViewController {
-    
+    var user: User?
     
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
@@ -31,7 +31,8 @@ class LoginSignupViewController: UIViewController {
             case .Signup:
                 return !(emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty || userNameTextField.text!.isEmpty)
                 
-                
+            case .Edit:
+                return !(userNameTextField.text!.isEmpty)
             }
             
         }
@@ -47,6 +48,7 @@ class LoginSignupViewController: UIViewController {
     enum ViewMode {
         case Login
         case Signup
+        case Edit
     }
     var mode = ViewMode.Signup
     
@@ -71,6 +73,16 @@ class LoginSignupViewController: UIViewController {
             self.bioTextField.hidden = true
             self.urlTextField.hidden = true
             actionButton.setTitle("LogIn", forState: .Normal)
+        case .Edit:
+            self.emailTextField.hidden = true
+            self.passwordTextField.hidden = true
+            actionButton.setTitle("Edit", forState: .Normal)
+            if let user = user {
+                userNameTextField.text = user.userName
+                bioTextField.text = user.bio
+                urlTextField.text = user.url
+                
+            }
         }
         
     }
@@ -96,8 +108,16 @@ class LoginSignupViewController: UIViewController {
                         self.validationAlert("SignUp Error", message: "invalid information. please check again")
                     }
                 })
-
-                /*
+            case.Edit:
+                UserController.updateUser(user!, userName: self.userNameTextField.text!, bio: self.bioTextField.text, url: self.urlTextField.text, completion: { (success, user) -> Void in
+                    if success, let _ = user {
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                        
+                    }else {
+                        self.validationAlert("Edit Error", message: "could not edit")
+                    }
+                })
+                          /*
                 // MARK: - Navigation
                 
                 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -122,12 +142,11 @@ class LoginSignupViewController: UIViewController {
                 alert.addAction(okay)
                 }
                 
-                
-                
-                
-                
-                
-                
+    
+    func updateWithUser(user: User) {
+        self.user = user
+        mode = .Edit
+    }
                 
                 
                 

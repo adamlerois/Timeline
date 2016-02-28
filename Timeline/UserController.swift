@@ -58,7 +58,9 @@ class UserController {
         completion(success: true, user: mockUsers()[0])
         
     }
-    
+    static func logoutCurrentUser(){
+        
+    }
     
     
     static func mockUsers() ->[User] {
