@@ -30,6 +30,7 @@
 		54F5A5131C7FE2B7009A9601 /* UserSearchResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F5A5121C7FE2B7009A9601 /* UserSearchResultsTableViewController.swift */; };
 		54F5A5331C813831009A9601 /* ProfileHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F5A5321C813831009A9601 /* ProfileHeaderCollectionReusableView.swift */; };
 		54F5A5361C81791B009A9601 /* imageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F5A5351C81791B009A9601 /* imageCollectionViewCell.swift */; };
+		54FA4A701C837D57005AFD70 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FA4A6F1C837D57005AFD70 /* PostTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,7 @@
 		54F5A5121C7FE2B7009A9601 /* UserSearchResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSearchResultsTableViewController.swift; sourceTree = "<group>"; };
 		54F5A5321C813831009A9601 /* ProfileHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		54F5A5351C81791B009A9601 /* imageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = imageCollectionViewCell.swift; sourceTree = "<group>"; };
+		54FA4A6F1C837D57005AFD70 /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -201,6 +203,7 @@
 			children = (
 				54F5A5321C813831009A9601 /* ProfileHeaderCollectionReusableView.swift */,
 				54F5A5351C81791B009A9601 /* imageCollectionViewCell.swift */,
+				54FA4A6F1C837D57005AFD70 /* PostTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -341,6 +344,7 @@
 				54F5A5361C81791B009A9601 /* imageCollectionViewCell.swift in Sources */,
 				547F4E771C7D147500AF1800 /* AddPhotoTableViewController.swift in Sources */,
 				54F5A5131C7FE2B7009A9601 /* UserSearchResultsTableViewController.swift in Sources */,
+				54FA4A701C837D57005AFD70 /* PostTableViewCell.swift in Sources */,
 				547F4E831C7D1DE600AF1800 /* Post.swift in Sources */,
 				547F4E751C7D131600AF1800 /* ProfileDetailViewController.swift in Sources */,
 				547F4E891C7D463300AF1800 /* ImageController.swift in Sources */,

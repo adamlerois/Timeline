@@ -8,8 +8,12 @@
 
 import UIKit
 
-class AddPhotoTableViewController: UITableViewController {
+class AddPhotoTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+    var image: UIImage?
+    var caption: String?
 
+    @IBOutlet var addPhoto: UITableView!
+    @IBOutlet weak var captionTextField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,6 +22,64 @@ class AddPhotoTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+
+    @IBAction func cancelButtonTapped(sender: AnyObject) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    @IBAction func submitButtonTapped(sender: AnyObject) {
+        if let image = image  {
+            
+            
+            PostController.addPost(image, caption: self.caption, completion: { (success, post) -> Void in
+                if post != nil {
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                } else {
+                    let failedAlert = UIAlertController(title: "Error", message: "Please try again.", preferredStyle: .Alert)
+                    failedAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                    self.presentViewController(failedAlert, animated: true, completion: nil)
+                }
+            })
+        }
+    }
+    @IBAction func addPhotoButtonTapped(sender: AnyObject) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        
+        let alert = UIAlertController(title: "Select Photo Location", message: nil, preferredStyle: .ActionSheet)
+        
+        if UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary) {
+            alert.addAction(UIAlertAction(title: "Photo Library", style: .Default, handler: { (_) -> Void in
+                imagePicker.sourceType = .PhotoLibrary
+                self.presentViewController(imagePicker, animated: true, completion: nil)
+            }))
+        }
+        
+        if UIImagePickerController.isSourceTypeAvailable(.Camera) {
+            alert.addAction(UIAlertAction(title: "Camera", style: .Default, handler: { (_) -> Void in
+                imagePicker.sourceType = .Camera
+                self.presentViewController(imagePicker, animated: true, completion: nil)
+            }))
+        }
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        
+        presentViewController(alert, animated: true, completion: nil)
+
+    }
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        picker.dismissViewControllerAnimated(true, completion: nil)
+        
+        let image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        
+        self.image = image
+        addPhoto.setTitle("", forState: .Normal)
+        addPhoto.setBackgroundImage(self.image, forState: .Normal)
+    }
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        caption = textField.text
+        textField.resignFirstResponder()
+        return true
     }
 
     override func didReceiveMemoryWarning() {

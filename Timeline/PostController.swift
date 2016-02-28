@@ -12,14 +12,14 @@ import UIKit
 class PostController {
   
     
-    static func fetchTimeLineForUser(user: User, completion:(post: [Post]) -> Void) {
+    static func fetchTimeLineForUser(user: User, completion:(posts: [Post]) -> Void) {
         
     }
     
     static func addPost(image: UIImage, caption: String?, completion:(success: Bool, post: Post?) -> Void) {
         
     }
-    static func postFromIdentifier(identifier: String, completion:(post: [Post]?) -> Void) {
+    static func postFromIdentifier(identifier: String, completion:(posts: [Post]?) -> Void) {
         
     }
     

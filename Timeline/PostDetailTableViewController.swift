@@ -11,8 +11,12 @@ import UIKit
 class PostDetailTableViewController: UITableViewController {
     var post: Post?
 
+    @IBOutlet weak var headerImageView: UIImageView!
+    @IBOutlet weak var commentsLabel: UILabel!
+    @IBOutlet weak var likesLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateBasedOnPost()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -25,28 +29,67 @@ class PostDetailTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func updateBasedOnPost() {
+        if let post = post {
+            self.likesLabel.text = "Likes"
+            self.commentsLabel.text = "Comments"
+        ImageController.imageForIdentifier(post.imageEndPoint, completion: { (image) -> Void in
+            self.headerImageView.image = image
+        })
+        }
+        tableView.reloadData()
+        
+    }
 
+    @IBAction func addCommentTapped(sender: AnyObject) {
+        let alert = UIAlertController(title: "Add Comment", message: nil, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Add Comment", style: .Default, handler: nil))
+        
+        if let text = alert.textFields?.first?.text {
+            
+            PostController.addCommentWithTextToPost(text, post: self.post!, completion: { (success, post) -> Void in
+                
+                if let post = post {
+                    self.post = post
+                    self.updateBasedOnPost()
+                }
+            })
+        }
+        
+        alert.addAction(UIAlertAction(title: "cancel", style: .Default, handler: nil))
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    @IBAction func likeTapped(sender: AnyObject) {
+        PostController.addLikeToPost(post!) { (success, post) -> Void in
+            if let post = post {
+                self.post = post
+                self.updateBasedOnPost()
+            }
+        }
+    }
+  
+        
+    
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return (post?.comments.count)!
     }
 
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCellWithIdentifier("commentCell", forIndexPath: indexPath)
+        
+        let comment = post?.comments[indexPath.row]
+        cell.textLabel?.text = post?.comments
+        cell.detailTextLabel?.text = post?.userName
+        
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.

@@ -38,11 +38,7 @@ class LoginSignupViewController: UIViewController {
         }
         
     }
-    
-    
-    
-    
-    
+
     
     
     enum ViewMode {
