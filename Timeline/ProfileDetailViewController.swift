@@ -9,7 +9,7 @@
 import UIKit
 import SafariServices
 
-class ProfileDetailViewController: UIViewController,UICollectionViewDataSource, ProfileHeaderCollectionReusableViewDelegate {
+class ProfileDetailViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, ProfileHeaderCollectionReusableViewDelegate {
     @IBOutlet weak var collectionView: UICollectionView!
     
     @IBOutlet weak var editBarButton: UIBarButtonItem!
@@ -58,11 +58,16 @@ class ProfileDetailViewController: UIViewController,UICollectionViewDataSource, 
     
     //MARK:- UICollectionViewDataSource
     
-    func collectionView(collectionView: UICollectionView, numberOfItemInSection section: Int) -> Int {
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return userPosts.count
     }
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("collectionViewCell", forIndexPath: indexPath) as! imageCollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("collectionViewCell", forIndexPath: indexPath) as! ImageCollectionViewCell
         let post = userPosts[indexPath.row]
         cell.updateWithImageIdentifier(post.imageEndPoint)
         return cell

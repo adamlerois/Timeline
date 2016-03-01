@@ -8,7 +8,25 @@
 
 import Foundation
 
-struct User: Equatable {
+struct User: Equatable, FirebaseType {
+    
+    private let userNameKey = "userName"
+    private let bioKey = "bio"
+    private let urlKey = "url"
+    var endpoint: String {
+        return "users"
+    }
+    var jsonValue: [String:AnyObject] {
+        var json: [String:AnyObject] = [userNameKey: userName]
+        if let bio = bio {
+            json.updateValue(bio, forKey: bioKey)
+        }
+        if let url = url {
+            json.updateValue(url, forKey: urlKey)
+        }
+        return json
+        
+    }
     var userName: String
     var bio: String?
     var url: String?
@@ -18,6 +36,12 @@ struct User: Equatable {
         
         self.userName = userName
         self.identifier = identifier
+    }
+    init?(json: [String : AnyObject], identifier: String) {
+        guard let userName = json[userNameKey] as? String else {return nil}
+        self.userName = userName
+        self.bio = json[bioKey] as? String
+        self.url = json[urlKey] as? String
     }
 }
 
