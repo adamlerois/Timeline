@@ -11,9 +11,28 @@ import UIKit
 
 class PostController {
   
-    
     static func fetchTimeLineForUser(user: User, completion:(posts: [Post]) -> Void) {
-        
+        UserController.followedByUser(user) { (followed) -> Void in
+            let posts: [Post] = []
+            let tunnel = dispatch_group_create()
+            dispatch_group_enter(tunnel)
+            postsForUser(UserController.sharedController.currentUser, completion: { (posts) -> Void in
+             
+                dispatch_group_leave(tunnel)
+            })
+            if let followed = followed {
+                for user in followed {
+                    dispatch_group_enter(tunnel)
+                    postsForUser(user, completion: { (posts) -> Void in
+                        dispatch_group_leave(tunnel)
+                    })
+                }
+            }
+            dispatch_group_notify(tunnel, dispatch_get_main_queue(), { () -> Void in
+                let orderedPosts = orderPosts(posts)
+                completion(posts: orderedPosts)
+            })
+        }
     }
     
     static func addPost(image: UIImage, caption: String?, completion:(success: Bool, post: Post?) -> Void) {
@@ -21,22 +40,20 @@ class PostController {
         ImageController.uploadImage(image) { (identifier) -> Void in
             var post = Post(imageEndPoint: identifier, userName: UserController.sharedController.currentUser.userName, caption: caption, comments: [], likes: [], identifier: nil)
             post.save()
-           completion(success: true, post: post)
-        
+            completion(success: true, post: post)
         }
     }
-    
-    
+ 
     static func postFromIdentifier(identifier: String, completion:(posts: Post?) -> Void) {
         FirebaseController.dataAtEndpoint("posts/\(identifier)") { (data) -> Void in
             if let data = data as? [String: AnyObject] {
                 let post = Post(json: data, identifier: identifier)
-            
-            completion(posts: post)
+                
+                completion(posts: post)
             }else {
                 completion(posts: nil)
             }
-        
+            
         }
     }
     
@@ -55,8 +72,8 @@ class PostController {
     }
     
     
-     static func deletePost(post: Post) {
-     post.delete()
+    static func deletePost(post: Post) {
+        post.delete()
     }
     
     static func addCommentWithTextToPost(string: String, post: Post, completion:(success: Bool, post: Post?) -> Void) {
@@ -79,7 +96,7 @@ class PostController {
                 completion(success: true, post: post)
             }
         }
-
+        
         
         
     }
@@ -88,8 +105,8 @@ class PostController {
     
     static func deleteComment(comment: Comment, completion:(success: Bool, post: Post?) -> Void) {
         comment.delete()
-         postFromIdentifier(comment.identifier!) { (posts) -> Void in
-        completion(success: true, post: posts)
+        postFromIdentifier(comment.identifier!) { (posts) -> Void in
+            completion(success: true, post: posts)
         }
     }
     
@@ -107,23 +124,23 @@ class PostController {
     static func deleteLike(like: Like, completion:(success: Bool, post: Post?) -> Void) {
         like.delete()
         postFromIdentifier(like.identifier!) { (posts) -> Void in
-        completion(success: true, post: posts)
+            completion(success: true, post: posts)
         }
         
     }
     
     
     static func orderPosts(post: [Post]) -> [Post] {
-    
+        
         return post.sort({$0.0.identifier > $0.1.identifier})
     }
     
-//    static func mockPosts() -> [Post]{
-//        let post1 = Post(imageEndPoint: "-K1l4125TYvKMc7rcp5e", userName: "adamlerois", caption: "", comments: ["comment1", "comment2"], likes: ["like1, like2"], identifier: "1234")
-//        let post2 = Post(imageEndPoint: "-K1l4125TYvKMc7rcp5e", userName: "joseph")
-//        return [post1, post2]
-//    }
-//    
+    //    static func mockPosts() -> [Post]{
+    //        let post1 = Post(imageEndPoint: "-K1l4125TYvKMc7rcp5e", userName: "adamlerois", caption: "", comments: ["comment1", "comment2"], likes: ["like1, like2"], identifier: "1234")
+    //        let post2 = Post(imageEndPoint: "-K1l4125TYvKMc7rcp5e", userName: "joseph")
+    //        return [post1, post2]
+    //    }
+    //    
     
     
     
