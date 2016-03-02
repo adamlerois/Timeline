@@ -42,6 +42,11 @@ class AddPhotoTableViewController: UITableViewController, UIImagePickerControlle
             })
         }
     }
+    
+    
+    
+    // apple view controllers for the camera////////\\\\\\\\\\\\\\\\//////////////\\\\\\\\\\\\\\\\\\\
+    
     @IBAction func addPhotoButtonTapped(sender: AnyObject) {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
